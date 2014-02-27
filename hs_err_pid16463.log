@@ -1,7 +1,7 @@
 #
 # A fatal error has been detected by the Java Runtime Environment:
 #
-#  Internal Error (javaClasses.cpp:136), pid=14256, tid=6403
+#  Internal Error (javaClasses.cpp:136), pid=16463, tid=6403
 #  fatal error: Invalid layout of preloaded class
 #
 # JRE version:  (7.0_45-b18) (build )
@@ -14,9 +14,9 @@
 
 ---------------  T H R E A D  ---------------
 
-Current thread (0x00007ffb5d800800):  JavaThread "Unknown thread" [_thread_in_vm, id=6403, stack(0x0000000103199000,0x0000000103299000)]
+Current thread (0x00007f8f29804800):  JavaThread "Unknown thread" [_thread_in_vm, id=6403, stack(0x000000010e983000,0x000000010ea83000)]
 
-Stack: [0x0000000103199000,0x0000000103299000],  sp=0x0000000103298830,  free space=1022k
+Stack: [0x000000010e983000,0x000000010ea83000],  sp=0x000000010ea82830,  free space=1022k
 Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
 V  [libjvm.dylib+0x524ee9]  VMError::report_and_die()+0x5d5
 V  [libjvm.dylib+0x1ec38d]  report_vm_error(char const*, int, char const*, char const*)+0x54
@@ -39,7 +39,7 @@ Java Threads: ( => current thread )
 
 Other Threads:
 
-=>0x00007ffb5d800800 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=6403, stack(0x0000000103199000,0x0000000103299000)]
+=>0x00007f8f29804800 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=6403, stack(0x000000010e983000,0x000000010ea83000)]
 
 VM state:not at safepoint (not fully initialized)
 
@@ -55,16 +55,16 @@ Internal exceptions (0 events):
 No events
 
 Events (10 events):
-Event: 0.015 loading class 0x000000014e36d6e0 done
-Event: 0.016 loading class 0x000000014e36d100 done
-Event: 0.016 loading class 0x000000014e36d0e0
-Event: 0.016 loading class 0x000000014e3751e0
-Event: 0.016 loading class 0x000000014e3751e0 done
-Event: 0.016 loading class 0x000000014e375210
-Event: 0.016 loading class 0x000000014e375210 done
-Event: 0.016 loading class 0x000000014e375240
-Event: 0.016 loading class 0x000000014e375240 done
-Event: 0.016 loading class 0x000000014e36d0e0 done
+Event: 0.027 loading class 0x0000000159b456e0 done
+Event: 0.027 loading class 0x0000000159b45100 done
+Event: 0.027 loading class 0x0000000159b450e0
+Event: 0.028 loading class 0x0000000159b4d1e0
+Event: 0.028 loading class 0x0000000159b4d1e0 done
+Event: 0.028 loading class 0x0000000159b4d210
+Event: 0.028 loading class 0x0000000159b4d210 done
+Event: 0.028 loading class 0x0000000159b4d240
+Event: 0.028 loading class 0x0000000159b4d240 done
+Event: 0.028 loading class 0x0000000159b450e0 done
 
 
 Dynamic libraries:
@@ -211,10 +211,10 @@ Dynamic libraries:
 0x00000000004f9000 	/System/Library/PrivateFrameworks/CoreSymbolication.framework/Versions/A/CoreSymbolication
 0x00000000004f9000 	/System/Library/PrivateFrameworks/Symbolication.framework/Versions/A/Symbolication
 0x00000000004f9000 	/System/Library/PrivateFrameworks/DebugSymbols.framework/Versions/A/DebugSymbols
-0x0000000102745000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/server/libjvm.dylib
-0x000000010329b000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/libverify.dylib
-0x00000001032a8000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/libjava.dylib
-0x0000000103365000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/libzip.dylib
+0x000000010df2f000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/server/libjvm.dylib
+0x000000010ea85000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/libverify.dylib
+0x000000010ea92000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/libjava.dylib
+0x000000010eb4f000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/libzip.dylib
 
 VM Arguments:
 jvm_args: -Dfile.encoding=US-ASCII -Xbootclasspath:/Users/patriciaestridge/adt-bundle-mac-x86_64-20131030/sdk/platforms/android-19/android.jar 
@@ -245,7 +245,7 @@ SIGQUIT: SIG_DFL, sa_mask[0]=0xfffefeff, sa_flags=0x00000042
 
 OS:Bsduname:Darwin 12.5.0 Darwin Kernel Version 12.5.0: Sun Sep 29 13:33:47 PDT 2013; root:xnu-2050.48.12~1/RELEASE_X86_64 x86_64
 rlimit: STACK 8192k, CORE 0k, NPROC 709, NOFILE 10240, AS infinity
-load average:2.68 2.35 2.17
+load average:1.29 1.59 1.81
 
 CPU:total 4 (2 cores per cpu, 2 threads per core) family 6 model 58 stepping 9, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, aes, erms, ht, tsc, tscinvbit, tscinv
 
@@ -256,6 +256,6 @@ Memory: 4k page, physical 4194304k(1048576k free)
 
 vm_info: Java HotSpot(TM) 64-Bit Server VM (24.45-b08) for bsd-amd64 JRE (1.7.0_45-b18), built on Oct  8 2013 05:54:16 by "java_re" with gcc 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.11.00)
 
-time: Tue Feb 25 11:14:51 2014
+time: Thu Feb 27 14:46:46 2014
 elapsed time: 0 seconds
 

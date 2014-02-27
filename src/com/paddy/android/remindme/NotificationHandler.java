@@ -1,19 +1,22 @@
 package com.paddy.android.remindme;
 
-import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-import android.util.Log;
+import android.support.v4.app.NotificationCompat;
 
 public class NotificationHandler extends Service {
 	public static final String TAG = "NH";
 	private WakeLock mWakeLock;
+	public NotificationCreator notificationCreator = new NotificationCreator();
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -31,27 +34,7 @@ public class NotificationHandler extends Service {
 			stopSelf();
 			return;
 		}
-		
-		new PollTask().execute();
-	}
-	
-
-	
-	private class PollTask extends AsyncTask<Void, Void, Void> {
-		// this is where the update needs to happen - for this no need to call anything, but if an  HTTP request is needed it goes here
-	
-	
-		protected Void doInBackground(Void... params) {
-			return null;
-		}
-	
-		// here call notification manager
-		
-		@Override
-		protected void onPostExecute(Void result) {
-			//handle your data
-			stopSelf();
-		}
+		notificationCreator.createNotification(this);
 	}
 		
 	public void onStart(Intent intent, int startId) {

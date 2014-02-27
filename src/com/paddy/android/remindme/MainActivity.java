@@ -1,9 +1,12 @@
 package com.paddy.android.remindme;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
@@ -29,21 +32,45 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 		retrieveGlasses();
+		setButtons();
+		
+		// Might calling sharedPrefs onCreate solve null pointer?
+		// SharedPreferences sharedPref = getSharedPreferences("GlassesData", Context.MODE_PRIVATE);
+		// or perhaps an intent? startActivity(new Intent(MainActivity.this, TrackingClasses.class));
 		// notificationInterval();
-		timeNow.currentTime();
-
 		// startNotifications.notificationInterval();
 	}
 	
 	protected void onPause() {
 		super.onPause();
+		
+		SharedPreferences sharedPref = getSharedPreferences("GlassesData", Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putInt("glasses", glassesCount);
+		editor.commit();
 	}
 	
 	protected void onResume() {
 		super.onResume();
 		setContentView(R.layout.activity_main);
 		retrieveGlasses();
+		setButtons();
+		
+		SharedPreferences sharedPref = getSharedPreferences("GlassesData", Context.MODE_PRIVATE);
+		int hours = sharedPref.getInt("interval", 1);
+		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+		Intent i = new Intent(this, NotificationHandler.class);
+		PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
+		am.cancel(pi);
+		
+		if (hours > 0) {
+			am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 
+					SystemClock.elapsedRealtime() + hours*60*60*1000, 
+					hours*60*60*1000, pi);
+			Log.i(TAG, "Alarm called in if");
+		}
 	}
 	
 	@Override
@@ -72,7 +99,11 @@ public class MainActivity extends Activity {
 	public int retrieveGlasses() {
 		SharedPreferences sharedPref = getSharedPreferences("GlassesData", Context.MODE_PRIVATE);
 		int glassesToday = sharedPref.getInt("glasses", DEFAULT);
-		
+		return glassesToday;
+	}
+	
+	public void setButtons() {
+		SharedPreferences sharedPref = getSharedPreferences("GlassesData", Context.MODE_PRIVATE);
 		TableLayout tl = (TableLayout)findViewById(R.id.gridView);
 		int numRows = tl.getChildCount();
 		int q = 0;
@@ -93,7 +124,6 @@ public class MainActivity extends Activity {
 				buttons[i].setChecked(true);	
 			}
 		}
-		return glassesToday;
 	}
 		
 	public int rateOfDrinking() {
@@ -107,6 +137,7 @@ public class MainActivity extends Activity {
 			SharedPreferences sharedPref = getSharedPreferences("GlassesData", Context.MODE_PRIVATE);
 			SharedPreferences.Editor editor = sharedPref.edit();
 			editor.putInt("interval", hoursRounded);
+			editor.commit();
 			return hoursRounded;
 			
 		}
@@ -154,10 +185,6 @@ public class MainActivity extends Activity {
 			
 			displayTracking(glassesCount);
 		}
-	}
-		
-	public void setInexactRepeating(int ELAPSED_RALTIME_WAKEUP, long notificationInterval, PendingIntent drinkNotification) {
-		
 	}
 
 }
