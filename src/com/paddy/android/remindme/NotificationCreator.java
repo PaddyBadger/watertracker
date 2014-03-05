@@ -3,24 +3,43 @@ package com.paddy.android.remindme;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
+import android.util.Log;
 
-public class NotificationCreator extends Activity {
+public class NotificationCreator extends Service {
 
-	public NotificationCompat.Builder createNotification(Context context) {
+	public NotificationCompat.Builder createNotification() {
 		
-		 Intent intent = new Intent(this, NotificationReceiver.class);
-		   PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
-		
-		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
+		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+		 
 			notificationBuilder.setSmallIcon(R.drawable.water);
 			notificationBuilder.setContentTitle("Water Tracker");
 			notificationBuilder.setContentText("Time to drink!");
 			notificationBuilder.setAutoCancel(true);
 			
-		NotificationManager mNotificationBuilder = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		Intent intent = new Intent(this, NotificationReceiver.class);
+		 Log.i("createNotification", "I get to line 5");
+		
+		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+		stackBuilder.addParentStack(MainActivity.class);
+		stackBuilder.addNextIntent(intent);
+		PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+		
+		notificationBuilder.setContentIntent(resultPendingIntent);
+		
+		NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		mNotificationManager.notify(0, notificationBuilder.build());
 		return notificationBuilder;
+	}
+
+	@Override
+	public IBinder onBind(Intent intent) {
+		// TODO Auto-generated method stub
+		return null;
 	}	
 }

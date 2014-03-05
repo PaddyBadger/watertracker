@@ -16,7 +16,6 @@ public class TimeManager {
 	public CharSequence currentDate() {
 		Date now = new Date();
 		CharSequence date = DateFormat.format("EEEE,  MMM d, yyyy, hh:mm", now.getTime());
-		Log.i(TAG, "Date is " + date);
 		return date;
 	}
 	
@@ -25,14 +24,12 @@ public class TimeManager {
 		now.setToNow();
 		hour = now.hour;
 		minute = now.minute;
-		Log.i(TAG, "Time is " + now + "hour " + hour + "minute " + minute);
 		return hour;
 	}
 
 	
 	public int timeTillEOD() {
 		int hoursToEOD = (23 - currentTime());
-		Log.i(TAG, "hour in TimeTillEOD " + hoursToEOD);
 		return hoursToEOD;
 	}
 }

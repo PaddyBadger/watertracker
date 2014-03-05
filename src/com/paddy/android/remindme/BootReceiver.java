@@ -9,7 +9,7 @@ import android.os.SystemClock;
 import android.util.Log;
 
 public class BootReceiver {
-	public static final String TAG = "MA";
+	public static final String TAG = "BR";
 	
 	public void onReceive(Context context, Intent intent) {
 		SharedPreferences sharedPref = context.getSharedPreferences("GlassesData", Context.MODE_PRIVATE);
@@ -21,8 +21,8 @@ public class BootReceiver {
 		Log.i(TAG, "Alarm called");
 		if (hours > 0) {
 			am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 
-					SystemClock.elapsedRealtime() + hours*60*60*1000, 
-					hours*60*60*1000, pi);
+					SystemClock.elapsedRealtime() + hours*1000, 
+					hours*1000, pi);
 			Log.i(TAG, "Alarm called in if");
 		}
 	}

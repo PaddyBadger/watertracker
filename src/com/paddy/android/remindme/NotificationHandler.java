@@ -1,10 +1,9 @@
 package com.paddy.android.remindme;
 
-import android.app.Notification;
+
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
@@ -12,6 +11,8 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
+import android.content.Context;
 
 public class NotificationHandler extends Service {
 	public static final String TAG = "NH";
@@ -20,6 +21,7 @@ public class NotificationHandler extends Service {
 	
 	@Override
 	public IBinder onBind(Intent intent) {
+		Log.i("notificationHandler", "onBind");
 		return null;
 	}
 	
@@ -34,11 +36,22 @@ public class NotificationHandler extends Service {
 			stopSelf();
 			return;
 		}
-		notificationCreator.createNotification(this);
+		new NotificationTask().execute();
 	}
+	
+	private class NotificationTask extends AsyncTask<Void, Void, Void> {
 		
-	public void onStart(Intent intent, int startId) {
-		handleIntent(intent);
+		@Override
+		protected Void doInBackground(Void... params) {
+			Log.i("doInBackground", "called");
+			notificationCreator.createNotification();
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			stopSelf();
+		}
 	}
 	
 	public int onStartCommand(Intent intent, int flags, int startId) {
