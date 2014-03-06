@@ -25,10 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="CountTracker"/>
-        <service android:name="NotificationHandler" />
+        <service android:name=".NotificationHandler" />
         <service 
-            android:name="com.paddy.android.remindme.NotificationCreator"
+            android:name=".NotificationCreator"
             android:launchMode="singleTask" >
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>

@@ -44,7 +44,7 @@ public class NotificationHandler extends Service {
 		@Override
 		protected Void doInBackground(Void... params) {
 			Log.i("doInBackground", "called");
-			notificationCreator.createNotification();
+      startService(new Intent(NotificationHandler.this, NotificationCreator.class));
 			return null;
 		}
 		
