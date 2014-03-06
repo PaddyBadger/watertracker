@@ -13,6 +13,11 @@ import android.util.Log;
 
 public class NotificationCreator extends Service {
 
+  public int onStartCommand(final Intent intent, final int flags, final int startId) {
+      createNotification();
+      return START_NOT_STICKY; 
+  }
+
 	public NotificationCompat.Builder createNotification() {
 		
 		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
