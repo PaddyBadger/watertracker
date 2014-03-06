@@ -17,7 +17,6 @@ import android.content.Context;
 public class NotificationHandler extends Service {
 	public static final String TAG = "NH";
 	private WakeLock mWakeLock;
-	public NotificationCreator notificationCreator = new NotificationCreator();
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -44,7 +43,7 @@ public class NotificationHandler extends Service {
 		@Override
 		protected Void doInBackground(Void... params) {
 			Log.i("doInBackground", "called");
-			notificationCreator.createNotification();
+			startService(new Intent(NotificationHandler.this, NotificationCreator.class));
 			return null;
 		}
 		

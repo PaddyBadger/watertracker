@@ -12,6 +12,11 @@ import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 public class NotificationCreator extends Service {
+	
+	public int onStartCommand(final Intent intent, final int flags, final int startId) {
+		       createNotification();
+		       return START_NOT_STICKY; 
+		   }
 
 	public NotificationCompat.Builder createNotification() {
 		
@@ -22,8 +27,8 @@ public class NotificationCreator extends Service {
 			notificationBuilder.setContentText("Time to drink!");
 			notificationBuilder.setAutoCancel(true);
 			
-		Intent intent = new Intent(this, NotificationReceiver.class);
-		 Log.i("createNotification", "I get to line 5");
+			Intent intent = new Intent(this, MainActivity.class);
+			Log.i("createNotification", "I get to line 5");
 		
 		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
 		stackBuilder.addParentStack(MainActivity.class);
@@ -34,6 +39,7 @@ public class NotificationCreator extends Service {
 		
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		mNotificationManager.notify(0, notificationBuilder.build());
+		Log.i("createNotification", "I get to line 8");
 		return notificationBuilder;
 	}
 
