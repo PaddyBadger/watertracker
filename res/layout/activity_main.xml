@@ -11,18 +11,17 @@
 	
 	        <ToggleButton 
 	            android:id="@+id/one"
-			    android:layout_width="70dp"
-			    android:layout_height="110dp" 
+			    android:layout_width="60dp"
+			    android:layout_height="100dp" 
 			    android:background="@drawable/check"
 			    android:layout_margin="20dp"
 			    android:textOn=""
 			    android:textOff=""
 			    android:onClick="onToggleClicked" />
-	        
 	         <ToggleButton 
 	            android:id="@+id/two"
-			    android:layout_width="70dp"
-			    android:layout_height="110dp" 
+			    android:layout_width="60dp"
+			    android:layout_height="100dp" 
 			    android:background="@drawable/check"
 			    android:layout_margin="20dp"
 			    android:textOn=""
@@ -30,8 +29,8 @@
 			    android:onClick="onToggleClicked" />
 	         <ToggleButton
 	            android:id="@+id/three" 
-			   	android:layout_width="70dp"
-			    android:layout_height="110dp" 
+			   	android:layout_width="60dp"
+			    android:layout_height="100dp" 
 			    android:background="@drawable/check"
 			    android:layout_margin="20dp"
 			    android:textOn=""
@@ -44,18 +43,17 @@
 	
 	        <ToggleButton 
 	            android:id="@+id/four"
-			    android:layout_width="70dp"
-			    android:layout_height="110dp" 
+			    android:layout_width="60dp"
+			    android:layout_height="100dp" 
 			    android:background="@drawable/check"
 			    android:layout_margin="20dp"
 			    android:textOn=""
 			    android:textOff=""
 			    android:onClick="onToggleClicked"/>
-	        
 	         <ToggleButton 
 	            android:id="@+id/five"
-			    android:layout_width="70dp"
-			    android:layout_height="110dp" 
+			    android:layout_width="60dp"
+			    android:layout_height="100dp" 
 			    android:background="@drawable/check"
 			    android:layout_margin="20dp"
 			    android:textOn=""
@@ -63,8 +61,8 @@
 			    android:onClick="onToggleClicked" />
 	         <ToggleButton
 	            android:id="@+id/six" 
-			   	android:layout_width="70dp"
-			    android:layout_height="110dp" 
+			   	android:layout_width="60dp"
+			    android:layout_height="100dp" 
 			    android:background="@drawable/check"
 			    android:layout_margin="20dp"
 			    android:textOn=""
@@ -77,18 +75,17 @@
 	
 	        <ToggleButton 
 	            android:id="@+id/seven"
-			    android:layout_width="70dp"
-			    android:layout_height="110dp" 
+			    android:layout_width="60dp"
+			    android:layout_height="100dp" 
 			    android:background="@drawable/check"
 			    android:layout_margin="20dp"
 			    android:textOn=""
 			    android:textOff=""
 			    android:onClick="onToggleClicked" />
-	        
 	         <ToggleButton 
 	            android:id="@+id/eight"
-			    android:layout_width="70dp"
-			    android:layout_height="110dp" 
+			    android:layout_width="60dp"
+			    android:layout_height="100dp" 
 			    android:background="@drawable/check"
 			    android:layout_margin="20dp"
 			    android:textOn=""
@@ -96,8 +93,8 @@
 			    android:onClick="onToggleClicked"/>
 	         <ToggleButton
 	            android:id="@+id/nine" 
-			   	android:layout_width="70dp"
-			    android:layout_height="110dp" 
+			   	android:layout_width="60dp"
+			    android:layout_height="100dp" 
 			    android:background="@drawable/check"
 			    android:layout_margin="20dp"
 			    android:textOn=""

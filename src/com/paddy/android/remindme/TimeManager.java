@@ -15,7 +15,7 @@ public class TimeManager {
 	
 	public CharSequence currentDate() {
 		Date now = new Date();
-		CharSequence date = DateFormat.format("EEEE,  MMM d, yyyy, hh:mm", now.getTime());
+		CharSequence date = DateFormat.format("EEEE,  MMM d, yyyy", now.getTime());
 		return date;
 	}
 	
@@ -23,10 +23,8 @@ public class TimeManager {
 		Time now = new Time();
 		now.setToNow();
 		hour = now.hour;
-		minute = now.minute;
 		return hour;
 	}
-
 	
 	public int timeTillEOD() {
 		int hoursToEOD = (23 - currentTime());

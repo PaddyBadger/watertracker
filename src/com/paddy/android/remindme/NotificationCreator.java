@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -27,13 +28,15 @@ public class NotificationCreator extends Service {
 			notificationBuilder.setContentText("Time to drink!");
 			notificationBuilder.setAutoCancel(true);
 			
-			Intent intent = new Intent(this, MainActivity.class);
+			Intent intent = new Intent(this, TodayActivity.class);
 			Log.i("createNotification", "I get to line 5");
 		
 		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-		stackBuilder.addParentStack(MainActivity.class);
+		stackBuilder.addParentStack(TodayActivity.class);
 		stackBuilder.addNextIntent(intent);
 		PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+		
+		resultPendingIntent.cancel();
 		
 		notificationBuilder.setContentIntent(resultPendingIntent);
 		

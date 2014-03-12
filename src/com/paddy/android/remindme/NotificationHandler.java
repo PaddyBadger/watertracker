@@ -1,8 +1,6 @@
 package com.paddy.android.remindme;
 
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -10,9 +8,7 @@ import android.os.AsyncTask;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.content.Context;
 
 public class NotificationHandler extends Service {
 	public static final String TAG = "NH";
@@ -20,7 +16,6 @@ public class NotificationHandler extends Service {
 	
 	@Override
 	public IBinder onBind(Intent intent) {
-		Log.i("notificationHandler", "onBind");
 		return null;
 	}
 	

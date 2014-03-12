@@ -4,60 +4,60 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.FragmentManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.view.Menu;
+import android.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.TableRow;
 
-public class MainActivity extends Activity {
+public class TodayActivity extends Activity implements OnClickListener{
 	public static final String TAG = "MA";
 	public int glassesCount;
 	public int glassesToDrink = 9;
 	public int DEFAULT = 0;
 	public ToggleButton[] buttons;
 	public TimeManager timeNow = new TimeManager();
-	
+	public ResetGlasses reset = new ResetGlasses();
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
 	}
 	
 	protected void onResume() {
 		super.onResume();
 		setContentView(R.layout.activity_main);
+		
+		resetGlasses();
+		
 		setGlasses();
-		
-		SharedPreferences sharedPref = getSharedPreferences("GlassesData", Context.MODE_PRIVATE);
-		int hours = sharedPref.getInt("interval", 1);
-		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-		Intent i = new Intent(this, NotificationHandler.class);
-		PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
-		am.cancel(pi);
-		
-		if (hours > 0) {
-			am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 
-					SystemClock.elapsedRealtime() + hours*60*60*1000, 
-					hours*60*60*1000, pi);
-		}
+		setAlarm();	
 	}
 	
 	protected void onPause() {
 		super.onPause();
+		
+		int glassesToday = glassesCount;
+		CharSequence dateToday = timeNow.currentDate();
+		String today = dateToday.toString();
+		
+		SharedPreferences sharedPref = getSharedPreferences("TotalGlasses", Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putInt(today, glassesToday);
+		editor.commit();
+		
 		glassesCount = 0;
-	}
-	
-	@Override
-	 public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-	getMenuInflater().inflate(R.menu.main, menu);
-	return true;
 	}
 	
 	public void onToggleClicked(View v) {
@@ -91,7 +91,6 @@ public class MainActivity extends Activity {
 		for (int i=0; i < q; i++) {
 			if (sharedPref.getBoolean(Integer.toString(buttons[i].getId()), false)) {
 				buttons[i].setChecked(true);	
-				
 				glassesCount += 1;
 				glassesToDrink = glassesToDrink - glassesCount;
 				
@@ -107,7 +106,7 @@ public class MainActivity extends Activity {
 			if (hoursRounded < 1) {
 				hoursRounded = 1;
 			}
-			SharedPreferences sharedPref = getSharedPreferences("GlassesData", Context.MODE_PRIVATE);
+			SharedPreferences sharedPref = getSharedPreferences("SpeedData", Context.MODE_PRIVATE);
 			SharedPreferences.Editor editor = sharedPref.edit();
 			editor.putInt("interval", hoursRounded);
 			editor.commit();
@@ -119,16 +118,16 @@ public class MainActivity extends Activity {
 	
 	public void displayTracking (int glassesCount) {
 		if (glassesCount == 1) {
-            Toast.makeText(MainActivity.this,  "Way to go! " + glassesCount + " Glass of water drunk today. " + glassesToDrink + " Left today. You should drink a glass of water every " 
+            Toast.makeText(TodayActivity.this,  "Way to go! " + glassesCount + " Glass of water drunk today. " + glassesToDrink + " Left today. You should drink a glass of water every " 
              + rateOfDrinking() + " hours to reach the target",  Toast.LENGTH_SHORT).show();  
         
        } else if (glassesCount > 1 && glassesCount < 9){
-    	   Toast.makeText(MainActivity.this,  "Way to go! " + glassesCount + " Glasses of water drunk today. "+ glassesToDrink + " Left today. You should drink a glass of water every " 
+    	   Toast.makeText(TodayActivity.this,  "Way to go! " + glassesCount + " Glasses of water drunk today. "+ glassesToDrink + " Left today. You should drink a glass of water every " 
              + rateOfDrinking() + " hours to reach the target",  Toast.LENGTH_SHORT).show();  
        } else if (glassesCount == 0 ) {
-    	   Toast.makeText(MainActivity.this,  "Better get drinking, you're on 0." ,  Toast.LENGTH_SHORT).show();
+    	   Toast.makeText(TodayActivity.this,  "Better get drinking, you're on 0." ,  Toast.LENGTH_SHORT).show();
        } else {
-    	   Toast.makeText(MainActivity.this,  "Way to go! You have reached the target!" ,  Toast.LENGTH_SHORT).show();
+    	   Toast.makeText(TodayActivity.this,  "Way to go! You have reached the target!" ,  Toast.LENGTH_SHORT).show();
        }
 	}
 	
@@ -157,5 +156,42 @@ public class MainActivity extends Activity {
 			displayTracking(glassesCount);
 		}
 	}
-
+	
+	public void setAlarm() {
+		SharedPreferences sharedPref = getSharedPreferences("TotalGlasses", Context.MODE_PRIVATE);
+		int hours = sharedPref.getInt("interval", 0);
+		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+		Intent i = new Intent(this, NotificationHandler.class);
+		PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
+		am.cancel(pi);
+		
+		if (hours > 0) {
+			am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 
+					SystemClock.elapsedRealtime() + hours*60*60*1000, 
+					hours*60*60*1000, pi);
+		}
+	}
+	
+	public void resetGlasses() {
+		CharSequence dateToday = timeNow.currentDate();
+		String today = dateToday.toString();
+		Log.i("today", "is " +today);
+		
+		SharedPreferences sharedPref = getSharedPreferences("TotalGlasses", Context.MODE_PRIVATE);
+		
+		if (!sharedPref.contains(today)) {
+			zeroGlasses();
+		} else {
+			
+		}
+	}
+		
+	public void zeroGlasses() {
+			Log.i("zeroGlasses", "get's called");
+			
+			SharedPreferences sharedPref = getSharedPreferences("GlassesData", Context.MODE_PRIVATE);
+			SharedPreferences.Editor editor = sharedPref.edit();
+			editor.clear();
+			editor.commit();
+	}
 }
